@@ -34,8 +34,14 @@
       {!! Form::file('photo_id',array(1=>'Active',0=>'Not Active'), 0, ['class'=>'form-control']) !!}
     </div>
     <div class="form-group">
-      {!! Form::submit('Update User', ['class'=>'btn btn-primary']) !!}
+      {!! Form::submit('Update User', ['class'=>'btn btn-primary col-sm-6']) !!}
     </div>
+    {!! Form::close() !!}
+
+    {!! Form::open(['method'=>'DELETE','action'=>['UsersController@destroy',$user->id,]]) !!}
+      <div class="form-group">
+        {!! Form::submit('Delete User', ['class'=>'btn btn-danger col-sm-6']) !!}
+      </div>
     {!! Form::close() !!}
   </div>
 </div>
