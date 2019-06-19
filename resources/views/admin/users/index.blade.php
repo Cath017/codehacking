@@ -1,11 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-
-
-@if(Session::has('deleted_user'))
-  <p class="bg-danger">{{session('deleted_user ')}}</p>
-@endif
 <h1>Users</h1>
 <table class="table">
     <thead>
@@ -37,5 +32,26 @@
       @endif
     </tbody>
   </table>
+  @if(Session::has('message'))
+  <script>var type = "{{ Session::get('type', 'info') }}";
+    switch(type){
+        case 'info':
+            toastr.info("{{ Session::get('message') }}");
+            break;
 
+        case 'warning':
+            toastr.warning("{{ Session::get('message') }}");
+            break;
+
+        case 'success':
+            toastr.success("{{ Session::get('message') }}");
+            break;
+
+        case 'error':
+            toastr.error("{{ Session::get('message') }}");
+            break;
+    }</script>
+  {{-- <p class="bg-danger">{{session('deleted_user')}}</p> --}}
+@endif
 @stop
+

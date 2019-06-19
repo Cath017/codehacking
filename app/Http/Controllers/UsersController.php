@@ -60,6 +60,8 @@ class UsersController extends Controller
         }
 
         User::create($input);
+        Session::flash('message', 'The user has been created.');
+        Session::flash('type', 'success');
         return redirect('/users');
     }
 
@@ -116,6 +118,9 @@ class UsersController extends Controller
         }
         $user->update($input);
 
+        Session::flash('message', 'The user has been updated.');
+        Session::flash('type', 'info');
+
         return redirect('/users');
     }
 
@@ -133,7 +138,8 @@ class UsersController extends Controller
 
         $user->delete();
 
-        Session::flash('deleted_user', 'The user has been deleted');
+        Session::flash('message', 'The user has been deleted');
+        Session::flash('type', 'error');
         
         return redirect('/users');
 
