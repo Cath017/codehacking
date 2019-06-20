@@ -9,17 +9,19 @@
 </div>
 <div class="form-group">
   {!! Form::label('category_id', 'Category:') !!}
-  {!! Form::select('category_id',[''=>'Choose Options'], null, ['class'=>'form-control']) !!}
+  {!! Form::select('category_id',[''=>'Choose Options'] + $categories, null, ['class'=>'form-control']) !!}
 </div>
 <div class="form-group">
-    {!! Form::file('photo_id') !!}
+  <label class="btn btn-primary">
+   Browse... {!! Form::file('photo_id',['style'=>'display:none']) !!}
+  </label>
 </div>
 <div class="form-group">
   {!! Form::label('body', 'Description:') !!}
   {!! Form::textarea('body', null, ['class'=>'form-control']) !!}
 </div>
 <div class="form-group">
-  {!! Form::submit('Create Post', ['class'=>'btn btn-info']) !!}
+  {!! Form::submit('Create Post', ['class'=>'btn btn-primary']) !!}
 </div>
 {!! Form::close() !!}
 
