@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Post;
 use App\Photo;
 use App\Category;
+use App\Comment;
 use App\Http\Requests\PostCreateRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -137,5 +138,14 @@ class PostsController extends Controller
         Session::flash('type', 'error');
         return redirect('/posts');
 
+    }
+
+    public function post($id)
+    {
+        $post = Post::findOrFail($id);
+        $comments = $post->comments()->whereIsActive(1)->get();
+         
+        
+        return view('post', compact('post','comments'));
     }
 }

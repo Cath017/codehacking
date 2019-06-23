@@ -123,7 +123,7 @@
                     </li>
 
                     <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i> Users<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-male" aria-hidden="true"></i> Users<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
                             <a href="{{route('users.index')}}">All Users</a>
@@ -138,7 +138,7 @@
                     </li>
 
                     <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i>  Posts<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Posts<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
                                 <a href="{{route('posts.index')}}">All Posts</a>
@@ -154,14 +154,14 @@
 
 
                     <li>
-                        <a href="{{route('categories.index')}}"><i class="fa fa-wrench fa-fw"></i> Categories</a>
+                        <a href="{{route('categories.index')}}"><i class="fa fa-bars" aria-hidden="true"></i> Categories</a>
                         
                         <!-- /.nav-second-level -->
                     </li>
 
 
                     <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i> Media<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-picture-o" aria-hidden="true"></i> Media<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
                                 <a href="{{route('media.index')}}">All Media</a>
@@ -173,6 +173,14 @@
 
                         </ul>
                         <!-- /.nav-second-level -->
+                    </li>
+
+                    <li>
+                        <a href="{{route('comments.index')}}"><i class="fa fa-comment" aria-hidden="true"></i> Comments</a>
+                    </li>
+
+                    <li>
+                        <a href="{{route('replies.index')}}"><i class="fa fa-comment" aria-hidden="true"></i> Replies</a>
                     </li>
 
 

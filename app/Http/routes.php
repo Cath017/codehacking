@@ -19,16 +19,19 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index');
 
-Route::get('/admin', function(){
-    return view('admin.index');
-});
+Route::get('/post/{id}', ['as'=>'home.post','uses'=>'PostsController@post']);
 
 Route::group(['middleware'=>'admin'], function(){
+    Route::get('/admin', function(){
+        return view('admin.index');
+    });
     Route::resource('/users', 'UsersController');
     Route::resource('/posts', 'PostsController');
     Route::resource('/categories', 'CategoriesController');
     Route::resource('/media', 'PhotosController');
-    
-
+    Route::resource('/comments', 'CommentsController');
+    Route::resource('/replies', 'CommentRepliesController');
 });
+
+
 
