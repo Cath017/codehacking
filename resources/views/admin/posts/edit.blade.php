@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+@include('includes.ckeditor')
 <h1>Edit Post</h1>
 <div class="row">
   <div class="col-sm-3">
@@ -21,8 +22,11 @@
     </div>
     <div class="form-group">
       {!! Form::label('body', 'Description:') !!}
-      {!! Form::textarea('body', null, ['class'=>'form-control']) !!}
+      {!! Form::textarea('body', null, ['class'=>'form-control','id'=>'editor']) !!}
     </div>
+    <script>
+      CKEDITOR.replace('editor', options);
+      </script>
     <div class="form-group">
       {!! Form::submit('Update Post', ['class'=>'btn btn-info col-sm-6']) !!}
     </div>
