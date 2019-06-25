@@ -1,5 +1,7 @@
 
-
+.ck-editor__editable_inline {
+    min-height: 500px;
+}
 
 /****************User Profile  *********************/
 .user-row {
