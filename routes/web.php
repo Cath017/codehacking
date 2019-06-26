@@ -15,22 +15,18 @@ if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Route::auth();
 
 Route::get('/logout', 'Auth\LoginController@logout');
 
-Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index');
 
 Route::get('/post/{id}', ['as'=>'home.post','uses'=>'PostsController@show']);
 
 Route::group(['middleware'=>'admin'], function(){
-    Route::get('/admin', function(){
-        return view('admin.index');
-    });
+    Route::get('/admin', 'AdminController@index');
     Route::resource('/users', 'UsersController');
     Route::resource('/posts', 'PostsController');
     Route::resource('/categories', 'CategoriesController');

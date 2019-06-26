@@ -7,10 +7,9 @@
     <tr>
       <th>Id</th>
       <th>Picture</th>
+      <td>Title</td>
       <th>Author</th>
       <th>Category</th>
-      <td>Title</td>
-      <th>Body</th>
       <th>Created</th>
       <th>Updated</th>
     </tr>
@@ -21,14 +20,13 @@
     <tr>
       <td>{{$post->id}}</td>
       <td><img height="70" src="{{$post->photo ? $post->photo->file : '/images/placeholder1.jpg'}}" alt=""></td>
+      <td><a href="{{route('home.post', $post->slug)}}">{{$post->title}}</a></td>
       <td>{{$post->user['name']}}</td>
       <td>{{$post->category ? $post->category['name'] : 'Uncategorized'}}</td>
-      <td><a href="{{route('posts.edit', $post->id)}}">{{$post->title}}</a></td>
-      <td>{{str_limit($post->body, 20)}}</td>
       <td>{{$post->created_at->diffForHumans()}}</td>
       <td>{{$post->updated_at->diffForHumans()}}</td>
-      <td><a href="{{route('home.post', $post->slug)}}">View Post</a></td>
-      <td><a href="{{route('comments.show', $post->id)}}">View Comments</a></td>
+      <td><a class="btn btn-success" href="{{route('posts.edit', $post->id)}}">Update Post</a></td>
+      <td><a class="btn btn-info" href="{{route('comments.show', $post->id)}}">View Comments</a></td>
     </tr>
       @endforeach
     @endif

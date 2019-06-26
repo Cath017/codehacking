@@ -74,9 +74,10 @@ class PostsController extends Controller
     {
         $post = Post::findBySlugOrFail($slug);
         $comments = $post->comments()->whereIsActive(1)->get();
+        $categories = Category::all();
          
         
-        return view('post', compact('post','comments'));
+        return view('post', compact('post','comments','categories'));
     }
 
     /**
