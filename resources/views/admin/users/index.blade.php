@@ -20,7 +20,7 @@
         @foreach($users as $user)
       <tr>
         <td>{{$user->id}}</td>
-        <td><img height="50" src="{{$user->photo ? $user->photo->file : '/images/placeholder.jpg'}}" alt=""></td>
+        <td><img height="50" src="{{$user->photo ? $user->photo->file : '/images/avatar.png'}}" alt=""></td>
         <td><a href="{{route('users.edit', $user->id)}}">{{$user->name}}</a></td>
         <td>{{$user->email}}</td>
         <td>{{$user->role['name']}}</td>
@@ -32,26 +32,10 @@
       @endif
     </tbody>
   </table>
-  @if(Session::has('message'))
-  <script>var type = "{{ Session::get('type', 'info') }}";
-    switch(type){
-        case 'info':
-            toastr.info("{{ Session::get('message') }}");
-            break;
-
-        case 'warning':
-            toastr.warning("{{ Session::get('message') }}");
-            break;
-
-        case 'success':
-            toastr.success("{{ Session::get('message') }}");
-            break;
-
-        case 'error':
-            toastr.error("{{ Session::get('message') }}");
-            break;
-    }</script>
-  {{-- <p class="bg-danger">{{session('deleted_user')}}</p> --}}
-@endif
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-5">
+      {{$users->render()}}
+    </div>
+  </div>
 @stop
 

@@ -10,18 +10,18 @@ class Comment extends Model
         'post_id',
         'user_id',
         'body',
-        'is_active'
+        'is_approved',
+        'parent_id'
     ];
 
-    public function replies(){
-        return $this->hasMany('App\CommentReply');
-    }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo('App\User');
     }
 
-    public function post(){
+    public function post()
+    {
         return $this->belongsTo('App\Post');
     }
 }

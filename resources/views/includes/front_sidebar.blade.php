@@ -26,11 +26,10 @@
                     </ul>
                 @endforeach
                 @endif
-            </div>
-            
+            </div>           
             <!-- /.col-lg-6 -->
         </div>
         <!-- /.row -->
     </div>
-
+</div>
 </div>

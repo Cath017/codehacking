@@ -3,30 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use App\Http\Requests\PostCreateRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Post;
 use App\Photo;
 use App\Category;
-use App\Comment;
-use App\Http\Requests\PostCreateRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-
 
 class PostsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        $posts = Post::paginate(10);
-        return view('admin.posts.index', compact('posts'));
+        // $this->middleware('auth', ['except' => 'post.show']);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -35,7 +23,7 @@ class PostsController extends Controller
     public function create()
     {
         $categories = Category::pluck('name', 'id')->all();
-        return view('admin.posts.create', compact('categories'));
+        return view('post.create', compact('categories'));
     }
 
     /**
@@ -48,20 +36,23 @@ class PostsController extends Controller
     {
         $input = $request->all();
         $user = Auth::user();
-        
-        if($file = $request->file('photo_id')){
+
+        if ($file = $request->file('photo_id')) {
             $name = time() . $file->getClientOriginalName();
             $file->move('images', $name);
 
-            $photo = Photo::create(['file'=>$name]);
-            $input['photo_id'] = $photo->id;     
+            $photo = Photo::create(['file' => $name]);
+            $input['photo_id'] = $photo->id;
         }
-       
-        $user->posts()->create($input);
-        Session::flash('message', 'The post has been successfully created.');
-        Session::flash('type', 'success');
-        return redirect('/posts');
 
+        $user->posts()->create($input);
+
+        $notification = array(
+            'message' => 'The post has been successfully created',
+            'type' => 'success'
+        );
+
+        return redirect('/')->with($notification);
     }
 
     /**
@@ -72,12 +63,12 @@ class PostsController extends Controller
      */
     public function show($slug)
     {
-        $post = Post::findBySlugOrFail($slug);
-        $comments = $post->comments()->whereIsActive(1)->get();
-        $categories = Category::all();
-         
-        
-        return view('post', compact('post','comments','categories'));
+        $post = Post::findBySlugOrFail($slug)->load(['comments.user', 'comments.user.photo']);
+        $comments =  $post->comments->groupBy('parent_id');
+        $comments['root'] = $comments[''];
+        unset($comments['']);
+
+        return view('post', compact('post', 'comments'));
     }
 
     /**
@@ -91,7 +82,9 @@ class PostsController extends Controller
         $post = Post::findOrFail($id);
         $categories = Category::pluck('name', 'id')->all();
 
-        return view('admin.posts.edit', compact('post', 'categories'));
+        $this->authorize('update', $post);
+
+        return view('post.edit', compact('post', 'categories'));
     }
 
     /**
@@ -106,19 +99,24 @@ class PostsController extends Controller
         $input = $request->all();
         $post = Post::findOrFail($id);
 
-        if($file = $request->file('photo_id')){
+        if ($file = $request->file('photo_id')) {
             $name = time() . $file->getClientOriginalName();
             $file->move('images', $name);
 
-            $photo = Photo::create(['file'=>$name]);
+            $photo = Photo::create(['file' => $name]);
             $input['photo_id'] = $photo->id;
         }
 
-       Auth::user()->posts()->whereId($id)->first()->update($input);
-        
-        Session::flash('message', 'The post was successfully updated.');
-        Session::flash('type', 'info');
-        return redirect('/posts');
+        $this->authorize('update', $post);
+
+        $post->update($input);
+        // Auth::user()->posts()->whereId($id)->first()->update($input);
+
+        $notification = array(
+            'message' => 'The post ' . $id . ' was successfully updated.',
+            'type' => 'info'
+        );
+        return redirect('/')->with($notification);
     }
 
     /**
@@ -129,28 +127,17 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        // $post = Post::findOrFail($id);
-        // unlink(public_path() . $post->photo->file);
-        // $post->delete();
-        
-        $post = Auth::user()->posts()->whereId($id)->first();
-
+        $post = Post::findOrFail($id);
         unlink(public_path() . $post->photo->file);
+
+        $this->authorize('update', $post);
 
         $post->delete();
 
-        Session::flash('message', 'The post has been successfully deleted.');
-        Session::flash('type', 'error');
-        return redirect('/posts');
-
+        $notification = array(
+            'message' => 'The post ' . $id . ' has been successfully deleted.',
+            'type' => 'error'
+        );
+        return redirect('/')->with($notification);
     }
-
-    // public function post($slug)
-    // {
-    //     $post = Post::findBySlugOrFail($slug);
-    //     $comments = $post->comments()->whereIsActive(1)->get();
-         
-        
-    //     return view('post', compact('post','comments'));
-    // }
 }

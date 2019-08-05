@@ -43,6 +43,11 @@
     </tbody>
   </table>
 </form>
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-5">
+    {{$photos->render()}}
+  </div>
+</div>
 <script>
   $(document).ready(function(){
     $('#options').click(function(){

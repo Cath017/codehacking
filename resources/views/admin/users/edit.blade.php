@@ -8,7 +8,7 @@
     <img src="{{$user->photo ? $user->photo->file : '/images/placeholder.jpg'}}" alt="" class="img-responsive img-rounded">
   </div>
   <div class="col-sm-9">
-    {!! Form::model($user,['method'=>'PATCH','action'=>['UsersController@update', $user->id], 'files'=>true])!!}
+    {!! Form::model($user,['method'=>'PATCH','action'=>['AdminUsersController@update', $user->id], 'files'=>true])!!}
     <div class="form-group">
       {!! Form::label('name', 'Name:') !!}
       {!! Form::text('name', null, ['class'=>'form-control']) !!}
@@ -38,14 +38,11 @@
     </div>
     {!! Form::close() !!}
 
-    {!! Form::open(['method'=>'DELETE','action'=>['UsersController@destroy',$user->id,]]) !!}
+    {!! Form::open(['method'=>'DELETE','action'=>['AdminUsersController@destroy',$user->id,]]) !!}
       <div class="form-group">
         {!! Form::submit('Delete User', ['class'=>'btn btn-danger col-sm-6']) !!}
       </div>
     {!! Form::close() !!}
   </div>
 </div>
-@include('includes.form_error')
-
-
 @stop

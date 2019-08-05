@@ -25,10 +25,10 @@ class PostCreateRequest extends Request
     public function rules()
     {
         return [
-            'title'=>'required',
-            'body'=>'required',
-            'category_id'=>'required',
-            'photo_id'=>'required'
+            'title' => 'required',
+            'body' => 'required',
+            'category_id' => 'required',
+            'photo_id' => 'image|nullable|max:2999'
         ];
     }
 }

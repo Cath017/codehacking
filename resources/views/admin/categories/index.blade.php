@@ -4,7 +4,7 @@
 @section('content')
   <h1>Categories</h1>
   <div class="col-sm-6">
-    {!! Form::open(['method'=>'POST','action'=>'CategoriesController@store'])!!}
+    {!! Form::open(['method'=>'POST','action'=>'AdminCategoriesController@store'])!!}
     <div class="form-group">
       {!! Form::label('name', 'Name of category:') !!}
       {!! Form::text('name', null, ['class'=>'form-control']) !!}
@@ -14,6 +14,7 @@
     </div>
     {!! Form::close() !!}
   </div>
+  <div class="row">
   <div class="col-sm-6">
     <table class="table">
       <thead>
@@ -30,11 +31,19 @@
           <td>{{$category->id}}</td>  
           <td><a href="{{route('categories.edit', $category->id)}}">{{$category->name}}</a></td>
           <td>{{$category->created_at->diffForHumans()}}</td>
+          <td>
+            {!! Form::open(['method'=>'DELETE','action'=>['AdminCategoriesController@destroy',$category->id,]]) !!}
+            <div class="form-group">
+            {!! Form::submit('Delete Category', ['class'=>'btn btn-danger']) !!}
+            </div>
+            {!! Form::close() !!}
+          </td>
         </tr>
           @endforeach
         @endif
       </tbody>
     </table>
+  </div>
   </div>
   
 @stop

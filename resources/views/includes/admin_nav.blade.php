@@ -113,10 +113,6 @@
                   <a href="{{route('comments.index')}}"><i class="fa fa-comment" aria-hidden="true"></i> Comments</a>
               </li>
 
-              <li>
-                  <a href="{{route('replies.index')}}"><i class="fa fa-comment" aria-hidden="true"></i> Replies</a>
-              </li>
-
           </ul>
 
 

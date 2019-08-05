@@ -14,6 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Post'  => 'App\Policies\PostPolicy',
     ];
 
     /**
@@ -22,10 +23,14 @@ class AuthServiceProvider extends ServiceProvider
      * @param  \Illuminate\Contracts\Auth\Access\Gate  $gate
      * @return void
      */
-    public function boot()
+    public function boot(GateContract $gate)
     {
         $this->registerPolicies();
 
-        //
+        $gate->before(function ($user) {
+            if ($user->isAdmin()) {
+                return true;
+            };
+        });
     }
 }

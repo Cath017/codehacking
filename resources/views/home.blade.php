@@ -1,52 +1,43 @@
-@extends('layouts.app')
-
+@extends('layouts.front')
 @section('content')
-         <!-- Page Content -->
-    <div class="container">
-
-        <div class="row">
-
-            <!-- Blog Entries Column -->
-            <div class="col-md-8">
-
-               
-                <!-- Blog Post -->
-                @if($posts)
-                @foreach($posts as $post)
-                <h2>
-                    <a href="{{route('home.post', $post->slug)}}">{{$post->title}}</a>
-                </h2>
-                <p class="lead">
-                    by {{$post->user->name}}
-                </p>
-                <p><span class="glyphicon glyphicon-time"></span> Posted {{$post->created_at->toCookieString()}}</p>
-                <hr>
-                <img class="img-responsive" src="{{$post->photo ? $post->photo->file : '/images/placeholder1.jpg'}}" alt="">
-                <hr>
-                <p>{{str_limit($post->body,500)}}</p>
-                <a class="btn btn-primary" href="{{route('home.post', $post->slug)}}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-                @endforeach
-                @endif
-                <hr>
-
-                <!-- Pagination -->
-                <div class="row">
-                    <div class="col-sm-6 col-sm-offset-5">
-                    {{$posts->render()}}
-                    </div>
+<div class="row">
+    <!-- Blog Entries Column -->
+    <div class="col-md-12">
+        
+        <!-- Blog Post -->
+        @if($posts)
+        @foreach($posts as $post)
+        <div class="well">
+            <div class="row">
+                <div class="col-md-4">
+                    <h2><a class="text-warning" href="{{route('post.show', $post->slug)}}">{{$post->title}}</a></h2>
+                    <p class="lead">by {{$post->user->name}}</p>
+                    <p><span class="glyphicon glyphicon-time"></span> Posted {{$post->created_at->toCookieString()}}</p>
+                    <hr>
+                </div>
+                <div class="col-md-4">
+                    <img class="img-responsive pull-right" src="{{$post->photo ? $post->photo->file : '/images/placeholder.jpg'}}" alt="">
+                </div>
+                <div class="col-md-4">
+                    <p>{!!str_limit($post->body,500)!!}</p>
+                    <a class="btn btn-default" href="{{route('post.show', $post->slug)}}">Read More...</a>
                 </div>
             </div>
-
-            <!-- Blog Sidebar -->
-            @include('includes.front_sidebar')
-
         </div>
-        <!-- /.row -->
+        @endforeach
+        @endif
 
-        <hr>
-        <!-- Footer -->
-        @include('includes.footer')
-
+        <!-- Pagination -->
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-5">
+            {{$posts->render()}}
+            </div>
+        </div>
     </div>
-   
-@endsection
+
+    <!-- Blog Sidebar -->
+    
+
+<!-- /.row -->
+<hr>
+@stop

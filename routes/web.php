@@ -23,16 +23,17 @@ Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::get('/', 'HomeController@index');
 
-Route::get('/post/{id}', ['as'=>'home.post','uses'=>'PostsController@show']);
+// Route::get('/post/{id}', ['as' => 'home.post', 'uses' => 'PostsController@show']);
 
-Route::group(['middleware'=>'admin'], function(){
+Route::group(['middleware' => 'admin'], function () {
     Route::get('/admin', 'AdminController@index');
-    Route::resource('/users', 'UsersController');
-    Route::resource('/posts', 'PostsController');
-    Route::resource('/categories', 'CategoriesController');
-    Route::resource('/media', 'PhotosController');
-    Route::resource('/comments', 'CommentsController');
-    Route::resource('/replies', 'CommentRepliesController');
+    Route::resource('/users', 'AdminUsersController');
+    Route::resource('/posts', 'AdminPostsController');
+    Route::resource('/categories', 'AdminCategoriesController');
+    Route::resource('/media', 'AdminPhotosController');
+    Route::resource('/comments', 'AdminCommentsController');
+    Route::delete('/delete/media', 'AdminPhotosController@deleteMedia');
 });
 
-Route::delete('/delete/media', 'PhotosController@deleteMedia');
+Route::post('/comments', 'CommentsController@store');
+Route::resource('/post', 'PostsController');
